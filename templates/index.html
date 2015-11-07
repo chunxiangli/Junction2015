@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Index
+{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+  <div id="time" class="ui-widget">
+    <label >Date: </label>
+    <br/>
+    <input id="startTime">
+    <br/>
+    <input id="endTime">
+  </div>
+  <div id="dests" class="ui-widget">
+    <label>Destinations: </label>
+  </div>
+  <button type="btn" class="btn btn-primary">Go</button>
+  <script src="/static/app.js"></script>
+
+{% endblock %}
