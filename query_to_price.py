@@ -38,7 +38,7 @@ def launch_API(departureAirport, arrivalAirport, departureTime, arrivalTime):
   chars = string.ascii_uppercase + string.digits
   size = 7
   flightCode = ''.join(random.choice(chars) for _ in range(6))
-  ticketPrice = random.randrange(200,500,1)
+  ticketPrice = str(random.randrange(200,500,1))
   departureTime  = str(eval(departureTime) + random.randrange(8,12,1)*10000 + random.randrange(0,30,1)*100)
   arrivalTime  = str(eval(arrivalTime) + random.randrange(12,16,1)*10000 + random.randrange(31,60,1)*100)
   duration = str(eval(arrivalTime)-eval(departureTime))
