@@ -105,7 +105,7 @@ def findThem(homeCity, citys, startTime, endTime):
     for candidate in options:
         visitOrder = [homeCity] + list(candidate) + [homeCity]
         opt = eval(visitOrder, cityCode, start, end, extradays)
-        costs.append(opt["totalPrice"])
+        costs.append(float(opt["totalPrice"]))
         allOptions.append(opt)
 
     # Sort by prices
