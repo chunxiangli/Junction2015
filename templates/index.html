@@ -6,7 +6,26 @@ Plan your trip
 
 {% block head %}
 {{ super() }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script src="/static/util.js"></script>
+
 <style>
+  .anchor-time{
+  line-height: 1;
+  font-weight: bold;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+
+  .d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+  }
+  
   input.box{
   width: 25%!important;
   margin-right: 20px;
@@ -16,7 +35,7 @@ Plan your trip
 
 {% block content %}
 <div class="starter-template">
-  <h1>Plan your trip:</h1>
+  <h1>"Plan" your trip:</h1>
   <p class="lead"></p>
 </div>
 
@@ -39,8 +58,17 @@ Plan your trip
   <div class="form-group text-center">
     <button id="moreDest"type="btn" class="btn btn-success">More destinations</button>
     <button id="search" type="btn" class="btn btn-primary">Go</button>
-  </div>
-  <script src="/static/app.js"></script>
+  </div> 
 </form>
+
+<div id="result">
+  <div class="starter-template">
+  <h1>Search Result:</h1>
+  <p class="lead"></p>
+</div>
+
+</div>
+<script src="/static/display.js"></script>
+<script src="/static/app.js"></script>
 
 {% endblock %}

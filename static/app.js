@@ -1,4 +1,7 @@
 $(document).ready(function(){
+    //////// init ///////////
+    $('#result').hide();
+    
     function addCities(){
 	    
 	var div = $('<div class="form-group dests"><label class="col-sm-2"></label><div class="col-sm-10 text-left"></div></div>').insertAfter('div.dests:last');
@@ -6,7 +9,7 @@ $(document).ready(function(){
 	    $('div.dests:last .col-sm-10').append("<input class='dest form-control pull-left box'/>");
 	};
     }
-    addCities();
+    // addCities();
 
     $('button#moreDest').on('click', function(e){
 	addCities();
@@ -52,8 +55,16 @@ $(document).ready(function(){
 	    data: JSON.stringify(post_data),
 	    dataType:'json',
 	    success: function(data){
-		//On ajax success do this
+		//On ajax success do this		
+		var w = 1000;
+		var h = 50 * (data['options'].length + 1); 
+		var svg = d3.select('#result')
+			.append('svg')
+			.attr("width", w)
+			.attr("height", h);
 		console.log(data);
+		plot_trips(svg, data['options']);
+		$('#result').show();
 	    },
 	    error: function(xhr, ajaxOptions, thrownError) {
 		//On error do this
@@ -68,5 +79,5 @@ $(document).ready(function(){
 	    }
 	});
 	e.preventDefault();
-    });
+    }).click();
 });

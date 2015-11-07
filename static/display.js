@@ -1,57 +1,9 @@
-function plot_one_trip(trip){
-    
-}
-
-function parse_datetime(str){
-    var segs = str.split(" ");
-    var dt = new Date(segs[0]);
-    var hour = parseInt(segs[1].split(":")[0]);
-    var minute = parseInt(segs[1].split(":")[1]);
-    dt.setHours(hour);
-    dt.setMinutes(minute);
-    return dt;
-}
-
-function milisec2hour(t){
-    // console.log(t);
-    return t / 1000 / 3600;
-}
-
-function scaled_position_of_time(start, end, t, length){
-    //time inputs should be Date object
-    // console.log('end - start', end - start);
-    // console.log('t, start', t, start);
-    // console.log('t - start', t - start);
-    var diff_hours_total = milisec2hour(end - start);
-    var diff_hours_until_t = milisec2hour(t - start);
-    // console.log(diff_hours_until_t, diff_hours_total);
-    // console.log(length  * diff_hours_until_t / diff_hours_total);
-    if(diff_hours_until_t == 0){
-	return 0;
-    }
-    else{
-	return length  * diff_hours_until_t / diff_hours_total;
-    }
-}
-
-function time_anchors_between_period(start, end){
-    //return 12:00am of all days between a period of time
-    var cur_time = new Date(start);
-    cur_time.setHours(12);
-    cur_time.setMinutes(0);
-    var ts = [];
-    while(cur_time < end){
-	ts.push(new Date(cur_time));
-	cur_time.setDate(cur_time.getDate() + 1);
-    }
-    return ts;
-}
 
 function plot_trips(svg, data){
     var all_dts = [];
     var W = parseInt(svg.attr('width'));
     var H = parseInt(svg.attr('height'));
-    
+        
     $.each(data, function(row_i, row){
 	row['id'] = row_i
 	$.each(row['trips'], function(i, trip){
@@ -77,6 +29,7 @@ function plot_trips(svg, data){
 
     // add trip events
     var rec_h = 50;
+    var paddingLeft = 20;
     var firstPaddingTop = 40;
     var paddingTop = 10;
     var color_map = {
@@ -198,7 +151,7 @@ function plot_trips(svg, data){
     	.classed('anchor-time', true)
 	.attr('y', 30)
 	.attr('x', function(pt){
-	    return pt['x'] - 25;
+	    return pt['x']-5;
 	})
 	.text(function(pt){
 	    return pt['dt'];
@@ -222,16 +175,16 @@ function plot_trips(svg, data){
 }
 
 $(document).ready(function(){
-    $.getJSON("/static/example_trips.json", function(data){
-	var w = 1000;
-	var h = 50 * (data['options'].length + 1); 
-	var svg = d3.select('#content')
-		.append('svg')
-		.attr("width", w)
-		.attr("height", h);
-;
-	plot_trips(svg, data['options']);
-    });
+    // $.getJSON("/static/example_trips.json", function(data){
+    // 	var w = 1000;
+    // 	var h = 50 * (data['options'].length + 1); 
+    // 	var svg = d3.select('#content')
+    // 		.append('svg')
+    // 		.attr("width", w)
+    // 		.attr("height", h);
+
+    // 	plot_trips(svg, data['options']);
+    // });
 });
 
 function test(svg){
