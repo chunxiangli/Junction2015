@@ -1,6 +1,9 @@
-from flask import Flask
-from flask import render_template
 import os
+import flask
+from flask import Flask
+from flask import render_template, request
+
+from search import search as search_routes
 
 app = Flask(__name__)
 
@@ -18,14 +21,20 @@ def add_header(response):
 def index(name=None):
     return render_template('index.html')
 
-# @app.route('/search')
-# def index(name=None):
-#     # search
-#     return render_template('index.html')
+@app.route('/search', methods=['POST'])
+def search():
+    data = request.get_json()
+    print(data)
+    response = search_routes(data['homeCity'], data['cities'], data['startTime'], data['endTime'])
+    print(type(response))
+    print(response)
+    return response
 
 @app.route('/results')
 def results(name=None):
     return render_template('results.html')
+
+app.debug = True
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

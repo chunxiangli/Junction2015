@@ -24,21 +24,21 @@ Plan your trip
   <div id="time" class="form-group">
     <label class="col-sm-2">Date: </label>
     <div class="col-sm-10 text-left">
-      <input type="text" id="startTime" class="form-control pull-left box" placeholder="Start date">
-      <input type="text" id="endTime" class="form-control pull-left box" placeholder="End date">
+      <input type="text" id="startTime" class="form-control pull-left box" placeholder="Start date" value="2015-10-1">
+      <input type="text" id="endTime" class="form-control pull-left box" placeholder="End date" value="2015-10-7">
     </div>
   </div>
   <div class="form-group dests">
     <label class="col-sm-2">Destinations: </label>
     <div class="col-sm-10 text-left">
-      <input class='dest form-control pull-left box'/>
-      <input class='dest form-control pull-left box'/>
-      <input class='dest form-control pull-left box'/>
+      <input class="dest form-control pull-left box" value="Rome"/>
+      <input class="dest form-control pull-left box" value="Vienna"/>
+      <input class="dest form-control pull-left box"/>
     </div>
   </div>
   <div class="form-group text-center">
     <button id="moreDest"type="btn" class="btn btn-success">More destinations</button>
-    <button type="btn" class="btn btn-primary">Go</button>
+    <button id="search" type="btn" class="btn btn-primary">Go</button>
   </div>
   <script src="/static/app.js"></script>
 </form>
