@@ -20,7 +20,7 @@ def findNeighbors(homecity, funcitys, startTime, endTime):
                 sdelta = abs((toDate(startTime) - toDate(stime)).days)
                 edelta = abs((toDate(endTime) - toDate(etime)).days)
                 if sdelta < 4 and edelta < 4:
-                    rstring = "%s %s %s %s %s" % (uname, " ".join(fcitys), stime, etime, "%s@gmail.com" % uname)
+                    rstring = "%s %s %s %s %s %s" % (uname, hcity, " ".join(fcitys), stime, etime, "%s@gmail.com" % uname)
                     found.append(rstring)
     if not found:
         found.append("Sorry, you will be alone :-(")
