@@ -7,6 +7,11 @@ app = Flask(__name__)
 def index(name=None):
     return render_template('index.html')
 
+# @app.route('/search')
+# def index(name=None):
+#     # search
+#     return render_template('index.html')
+
 @app.route('/results')
 def results(name=None):
     return render_template('results.html')
