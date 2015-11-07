@@ -3,7 +3,6 @@ appnope==0.1.0
 backports.ssl-match-hostname==3.4.0.2
 bdist-mpkg==0.5.0
 biopython==1.60
-bonjour-py==0.3
 certifi==2015.4.28
 coverage==4.0.1
 crab==0.4.2
