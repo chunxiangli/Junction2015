@@ -1,4 +1,5 @@
 from datetime import datetime
+
 def toDate(time):
     y1,m1,d1 = map(int, time.split('-'))
     start = datetime(y1, m1, d1)
