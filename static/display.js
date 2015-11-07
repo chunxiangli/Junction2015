@@ -77,11 +77,37 @@ function plot_trips(svg, data){
 
     // add trip events
     var rec_h = 50;
+    var firstPaddingTop = 40;
+    var paddingTop = 10;
+    var color_map = {
+	'flight': '#ffffbf',
+	'hotel': '#C0E1F9',
+	'site': '#FF8300',
+    }
+    var html_map = {
+	'flight': function(d){
+	    return "Flying from " + "<strong>" + d['startCity'] + "</strong>" + " to " + "<strong>" + d['endCity'] + "</strong>";
+	},
+	'hotel': function(d){
+	    return "At " + "<strong>" + d['name'] + "</strong>";
+	},
+	'site': function(d){
+	    return "At " + "<strong>" + d['name'] + "</strong>";
+	}
+    };
+    var tip = d3.tip()
+	    .attr('class', 'd3-tip')
+	    .offset([-5, 0])
+	    .html(function(d) {
+		return html_map[d['type']](d);
+	    });
+    svg.call(tip);
     svg
 	.selectAll('g')
 	.data(data)
 	.enter()
 	.append('g')
+	.classed('events', true)
 	.attr('fill', function(d, i){
 	    if(i % 2){
 		return '#E5F4FC';
@@ -96,7 +122,10 @@ function plot_trips(svg, data){
 	})
 	.enter()
 	.append('rect')
-	.attr('fill', '#888')
+	.attr('fill', function(t, i){
+	    return color_map[t['type']];
+	})
+	.attr('opacity', 0.8)
 	.attr('height', rec_h)
 	.attr('width', function(t){
 	    return t['x2'] - t['x1'];
@@ -105,16 +134,53 @@ function plot_trips(svg, data){
 	    return t['x1'];
 	})
     	.attr('y', function(t, i){
-	    var paddingTop = 40;
 	    if(t['row']==0){
-		return paddingTop;
+		return firstPaddingTop;
 	    }
 	    else{
-		return paddingTop + rec_h * t['row'];
+		return firstPaddingTop + (paddingTop + rec_h) * t['row'];
 	    }
-	});
+	})
+    	.on('mouseover', tip.show)
+	.on('mouseout', tip.hide);
+
     
-	
+    var icon_map = {
+	'flight': "/static/images/flight.svg",
+	'hotel': "/static/images/hotel.svg",
+	'site': "/static/images/site.svg",
+    }
+
+    svg.selectAll('g.events')
+	.selectAll('image')
+	.data(function(d, i){
+	    return d['trips'];
+	})
+	.enter()
+	.append('image')
+	.attr('x', function(t){
+	    var offset = (t['x2'] - t['x1']) / 2 - 12;
+	    return t['x1'] + offset;
+	})
+    	.attr('y', function(t, i){
+	    var offset = rec_h / 2 - 12;
+	    if(t['row']==0){
+		return firstPaddingTop + offset;
+	    }
+	    else{
+		return firstPaddingTop + (paddingTop + rec_h) * t['row'] + offset;
+	    }
+	})
+	.attr('height', 24)
+	.attr('width', 24)
+	.attr('xlink:href', function(t){
+	    return icon_map[t['type']];
+	})
+	.attr('opacity', 0.5)
+        .on('mouseover', tip.show)
+	.on('mouseout', tip.hide);
+
+
     // add anchor date text
     var anchor_dts = time_anchors_between_period(min_dt, max_dt);
     var anchor_pts = $.map(anchor_dts, function(dt){
@@ -126,6 +192,7 @@ function plot_trips(svg, data){
     
     svg.append('g')
 	.selectAll('text')
+	.classed('anchor-time', true)
 	.data(anchor_pts)
 	.enter()
 	.append('text')
