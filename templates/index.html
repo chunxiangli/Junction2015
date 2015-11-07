@@ -1,26 +1,78 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Index
+Plan your trip
 {% endblock %}
 
 {% block head %}
 {{ super() }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script src="/static/util.js"></script>
+
+<style>
+  body{
+  background-color: #deebf7;
+  }
+
+  .anchor-time{
+  line-height: 1;
+  font-weight: bold;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+
+  .d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+  }
+  
+  input.box{
+  width: 25%!important;
+  margin-right: 20px;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
+<div class="starter-template">
+  <h1>"Plan" your trip:</h1>
+  <p class="lead"></p>
+</div>
 
-  <div id="time" class="ui-widget">
-    <label >Date: </label>
-    <br/>
-    <input id="startTime">
-    <br/>
-    <input id="endTime">
+<form class="form-horizontal">
+  <div id="time" class="form-group">
+    <label class="col-sm-2">Date: </label>
+    <div class="col-sm-10 text-left">
+      <input type="text" id="startTime" class="form-control pull-left box" placeholder="Start date" value="2015-10-1">
+      <input type="text" id="endTime" class="form-control pull-left box" placeholder="End date" value="2015-10-7">
+    </div>
   </div>
-  <div id="dests" class="ui-widget">
-    <label>Destinations: </label>
+  <div class="form-group dests">
+    <label class="col-sm-2">Destinations: </label>
+    <div class="col-sm-10 text-left">
+      <input class="dest form-control pull-left box" value="Rome"/>
+      <input class="dest form-control pull-left box" value="Vienna"/>
+      <input class="dest form-control pull-left box"/>
+    </div>
   </div>
-  <button type="btn" class="btn btn-primary">Go</button>
-  <script src="/static/app.js"></script>
+  <div class="form-group text-center">
+    <button id="moreDest"type="btn" class="btn btn-success">More destinations</button>
+    <button id="search" type="btn" class="btn btn-primary">Go</button>
+  </div> 
+</form>
+
+<div id="result">
+  <div class="starter-template">
+  <h1>Search Result:</h1>
+  <p class="lead"></p>
+</div>
+
+</div>
+<script src="/static/display.js"></script>
+<script src="/static/app.js"></script>
 
 {% endblock %}
