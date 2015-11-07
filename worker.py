@@ -1,6 +1,8 @@
 import itertools
 import json
 from datetime import datetime, timedelta
+from hotels import find_hotels
+from attractions import find_attractions
 
 from query_to_price import launch_API
 
@@ -81,6 +83,12 @@ def eval(citys, cityCode, start, end, extradays):
             extradays += pad
             ncity -= 1            
         flytime = timedelta(stay) + flytime
+
+    #query hotels
+    trips.extend(find_hotels(trips))
+    #query attractions
+    trips.extend(find_attractions(trips))
+
     opt = {}
     opt["totalPrice"] = "%.2f" % totalprice
     opt["trips"] = trips
