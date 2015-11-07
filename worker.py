@@ -121,7 +121,7 @@ def findThem(homeCity, citys, startTime, endTime):
 
     # Sort by prices
     inds = sorted(range(len(costs)), key=lambda k: costs[k])    
-    sortedOptions = [allOptions[ind] for ind in inds]
+    sortedOptions = [allOptions[ind] for ind in inds[0:5]]
     result = {}
     result["options"] = sortedOptions
     return json.dumps(result)
