@@ -192,10 +192,10 @@ function plot_trips(svg, data){
     
     svg.append('g')
 	.selectAll('text')
-	.classed('anchor-time', true)
 	.data(anchor_pts)
 	.enter()
 	.append('text')
+    	.classed('anchor-time', true)
 	.attr('y', 30)
 	.attr('x', function(pt){
 	    return pt['x'] - 25;
