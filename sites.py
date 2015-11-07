@@ -47,7 +47,7 @@ def find_sites(trips):
         tmpres["duration"] = siteInfo[key] 
         startTime += timedelta(hours=siteInfo[key])
         if startTime.time() > time(18,0): startTime = datetime(startTime.year,startTime.month,startTime.day,18,0,0)
-        tmpres["end"] = re.sub('T',' ',startTime.isoformat())
+        tmpres["endTime"] = re.sub('T',' ',startTime.isoformat())
         del siteInfo[key]
         res.append(tmpres)
   return res
