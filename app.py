@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import render_template
+import os
 
 app = Flask(__name__)
 
@@ -17,5 +18,5 @@ def results(name=None):
     return render_template('results.html')
 
 if __name__ == '__main__':
-    ort = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
