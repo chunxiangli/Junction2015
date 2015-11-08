@@ -58,7 +58,7 @@ def find_sites(trips):
         tmpres = {}
         tmpres["type"] = "site"
         tmpres["popularity"] = popularity
-        tmpres["City"] = city
+        tmpres["city"] = city
         tmpres["name"] = name
         tmpres["price"] =  random.randrange(10,50,5)
         tmpres["startTime"] = re.sub('T',' ',startTime.isoformat())
