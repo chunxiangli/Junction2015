@@ -50,8 +50,7 @@ def getRestaurantsByCity(city):
         oneplace["price"] = "0"
         oneplace["address"] = venue["location"]["formattedAddress"]
         attractions.append(oneplace)
-        print oneplace
-        raw_input()
+    
     return attractions
 
 
