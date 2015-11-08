@@ -28,7 +28,7 @@ def stayTime(city):
     --------
     Int, the number of days to stay
     """
-    return random.randint(1,6)
+    return random.randrange(2,3,1)
 
     
 def callSu(startcity, endcity, flydate):
