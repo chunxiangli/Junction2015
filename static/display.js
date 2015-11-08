@@ -35,6 +35,7 @@ function plot_trips(svg, data){
 	'flight': '#3182bd',
 	'hotel': '#C0E1F9',
 	'site': '#FF8300',
+	'restaurant': '#880015',
     }
     var html_map = {
 	'flight': function(d){
@@ -45,6 +46,9 @@ function plot_trips(svg, data){
 	},
 	'site': function(d){
 	    return "At " + "<strong>" + d['name'] + "</strong>";
+	},
+	'restaurant': function(d){
+	    return "Meal at " + "<strong>" + d['name'] + "</strong>";
 	}
     };
     var tip = d3.tip()
