@@ -4,6 +4,7 @@ from flask import Flask
 from flask import render_template, request
 
 from search import search as search_routes
+from find import findNeighbors
 
 app = Flask(__name__)
 
@@ -28,6 +29,15 @@ def search():
     response = search_routes(data['homeCity'], data['cities'], data['startTime'], data['endTime'])
     print(type(response))
     print(response)
+    return response
+
+@app.route('/find', methods=['POST'])
+def search():
+    data = request.get_json()
+    #print(data)
+    response = findNeighbors(data['homeCity'], data['cities'], data['startTime'], data['endTime'])
+    #print(type(response))
+    #print(response)
     return response
 
 @app.route('/results')
