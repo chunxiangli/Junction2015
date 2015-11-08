@@ -3,6 +3,7 @@ import json
 from datetime import datetime, timedelta
 from hotels import find_hotels
 from sites import find_sites
+from resturants import find_restaurants
 
 from query_to_price import launch_API
 
@@ -65,6 +66,8 @@ def eval(citys, cityCode, start, end, extradays):
         trip["type"] = 'flight'
         trip["startCity"] = startAirport
         trip["endCity"] = endAirport
+        trip["startCityName"] = citys[i]
+        trip["endCityName"] = citys[i+1]
         trip["startTime"] = starttime
         trip["endTime"] = endtime
         trip["FLN"] = flightnumber
