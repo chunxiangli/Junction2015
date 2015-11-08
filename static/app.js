@@ -1,6 +1,9 @@
 $(document).ready(function(){
     //////// init ///////////
     $('#result').hide();
+    $('#partnerResult').hide();
+    
+    var airports = null;
     
     function addCities(){
 	    
@@ -13,6 +16,9 @@ $(document).ready(function(){
 
     $('button#moreDest').on('click', function(e){
 	addCities();
+	$( ".dest" ).autocomplete({
+	    source: airports
+	});
 	e.preventDefault();
     });
     
@@ -21,13 +27,13 @@ $(document).ready(function(){
     });
 
     $.getJSON('/static/airports.json', function(data){
-	var rows = $.map(data, function(row, index){
+	airports = $.map(data, function(row, index){
 	    return {'label': row['city'] + '(' + row['name'] + ')',
 		    'value': row['city']};
 	});
 		    
 	$( ".dest" ).autocomplete({
-	    source: rows
+	    source: airports
 	});
     });
     
@@ -50,8 +56,6 @@ $(document).ready(function(){
     }
     $('button#search').on('click', function(e){
 	var post_data = getFormData();
-	console.log('post data:', post_data);
-	console.log(JSON.stringify(post_data));
 	$.ajax({
 	    url: '/search',
 	    type: 'POST',
@@ -61,13 +65,16 @@ $(document).ready(function(){
 	    success: function(data){
 		//On ajax success do this		
 		var w = 2000;
-		var h = 50 * (data['options'].length + 1); 
+		var h = 50 * (data['options'].length + 1) + 50; 
 		var svg_padding_left = 500;
+		
+		// clean stuff
+		d3.select('svg').remove();
+		
 		var svg = d3.select('#result')
 			.append('svg')
 			.attr("width", w)
 			.attr("height", h)
-		console.log(data);
 		plot_trips(svg, data['options']);
 		$('#result').show();
 	    },
@@ -84,7 +91,6 @@ $(document).ready(function(){
 	e.preventDefault();
     }).click();
 
-    $('#partnerResult').hide();
     $("button#findPartner").on("click", function(e){
 	var post_data = getFormData();
 	$.ajax({
@@ -96,8 +102,8 @@ $(document).ready(function(){
 	    success: function(d){
 		//On ajax success do this
 		if(d['status'] == 0){
-		    $.each(d['items'], function(i){
-			$('ul.mate_list').append('<li>' + i + ' </li>');
+		    $.each(d['items'], function(i, item){
+			$('ul.mate_list').append('<li>' + item + ' </li>');
 		    });		    
 		}
 		else{

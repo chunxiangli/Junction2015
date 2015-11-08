@@ -13,7 +13,7 @@ def read_city_code():
 
 city_code_dict = read_city_code()
 
-def find_hotels(trips):
+def find_myhotels(trips):
         hotels = []
         trip = trips[0]
         #check_in_date, in_time = trip["endTime"].split()
@@ -35,6 +35,13 @@ def find_hotels(trips):
                 check_in_date, in_time= extract_date_and_time(trip, 'in')
                 city = trip["endCityName"]
         return hotels
+
+
+def find_hotels(trips):
+  hotels = find_myhotels(trips)
+  print '-------------------------------'
+  return hotels
+  pass
 
 def extract_date_and_time(trip, t_type):
         if t_type == "in":

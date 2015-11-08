@@ -4,13 +4,11 @@ function plot_trips(svg, data){
     var padding_left = 100;
     var W = parseInt(svg.attr('width')) - padding_left;
     
-    var H = parseInt(svg.attr('height'));
+    var H = parseInt(svg.attr('height')) - 50;
         
     $.each(data, function(row_i, row){
 	row['id'] = row_i;
 	$.each(row['trips'], function(i, trip){
-	    console.assert(trip['startTime'] != undefined, trip);
-	    console.assert(trip['endTime'] != undefined, trip);
 	    trip['startTime'] = parse_datetime(trip['startTime']);
 	    trip['endTime'] = parse_datetime(trip['endTime']);
 	    trip['row'] = row_i;
@@ -20,12 +18,8 @@ function plot_trips(svg, data){
     });
     var min_dt = all_dts.reduce(function (a, b) { return a < b ? a : b; });
     var max_dt = all_dts.reduce(function (a, b) { return a > b ? a : b; });
-    // console.log('max_dt, min_dt:', min_dt, max_dt);
     $.each(data, function(i, row){
 	$.each(row['trips'], function(i, trip){
-	    // console.log(min_dt, max_dt, trip['startTime'], trip['endTime'],
-	    // 		scaled_position_of_time(min_dt, max_dt, trip['startTime'], W),
-	    // 	       scaled_position_of_time(min_dt, max_dt, trip['endTime'], W));
 	    trip['x1'] = scaled_position_of_time(min_dt, max_dt, trip['startTime'], W);
 	    trip['x2'] = scaled_position_of_time(min_dt, max_dt, trip['endTime'], W);
 	});
@@ -41,6 +35,7 @@ function plot_trips(svg, data){
 	'flight': '#3182bd',
 	'hotel': '#C0E1F9',
 	'site': '#FF8300',
+	'restaurant': '#880015',
     }
     var html_map = {
 	'flight': function(d){
@@ -51,6 +46,9 @@ function plot_trips(svg, data){
 	},
 	'site': function(d){
 	    return "At " + "<strong>" + d['name'] + "</strong>";
+	},
+	'restaurant': function(d){
+	    return "Meal at " + "<strong>" + d['name'] + "</strong>";
 	}
     };
     var tip = d3.tip()
@@ -271,7 +269,6 @@ function test(svg){
 	.attr('width', 50)
 	.attr('height', 10)
 	.attr('x', function(x){
-	    console.log(x);
 	    return x * 100;
 	})
 	.attr('fill', '#666');
