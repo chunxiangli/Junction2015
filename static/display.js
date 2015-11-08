@@ -33,7 +33,7 @@ function plot_trips(svg, data){
     var padding_left_attr = 'translate(' + padding_left + ', 0)';
     var color_map = {
 	'flight': '#3182bd',
-	'hotel': '#C0E1F9',
+	'hotel': '#BBDF1C',
 	'site': '#FF8300',
 	'restaurant': '#880015',
     }
