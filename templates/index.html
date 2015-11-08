@@ -12,7 +12,7 @@ Plan your trip
 
 <style>
   body{
-  background-color: #deebf7;
+  background-color: #FFFAF0;
   }
 
   .anchor-time{
@@ -64,13 +64,13 @@ Plan your trip
 
 {% block content %}
 <div class="starter-template">
-  <h1>"Plan" your trip:</h1>
+  <h1><center>Plan a holiday</center></h1>
   <p class="lead"></p>
 </div>
 
 <form class="form-horizontal">
   <div id="time" class="form-group">
-    <label class="col-sm-2">Date: </label>
+    <label class="col-sm-2">During: </label>
     <div class="col-sm-10 text-left">
       <input type="text" id="startTime" class="form-control pull-left box" placeholder="Start date" value="2015-10-1">
       <input type="text" id="endTime" class="form-control pull-left box" placeholder="End date" value="2015-10-7">
@@ -79,15 +79,15 @@ Plan your trip
   <div class="form-group dests">
     <label class="col-sm-2">Destinations: </label>
     <div class="col-sm-10 text-left">
-      <input class="dest form-control pull-left box" value="Rome"/>
-      <input class="dest form-control pull-left box" value="Vienna"/>
-      <input class="dest form-control pull-left box"/>
+      <input class="dest form-control pull-left box" value="Barcelona"/>
+      <input class="dest form-control pull-left box" value="Berlin"/>
+      <input class="dest form-control pull-left box" value="Paris"/>
     </div>
   </div>
   <div class="form-group text-center">
-    <button id="moreDest"type="btn" class="btn btn-success">More destinations</button>
-    <button id="search" type="btn" class="btn btn-primary">Trip search<image src="/static/images/two209.png"/></button>
-    <button id="search" type="btn" class="btn">Tripmate search<image src="/static/images/airplane68.png" /></button>
+    <button id="moreDest"type="btn" class="btn btn-success">More destinations<image src="/static/images/international.png"/></button>
+    <button id="search" type="btn" class="btn btn-primary">Trip search<image src="/static/images/airplane68.png"/></button>
+    <button id="search" type="btn" class="btn">Tripmate search<image src="/static/images/two209.png" /></button>
   </div> 
 </form>
 
