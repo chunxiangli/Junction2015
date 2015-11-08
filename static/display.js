@@ -313,7 +313,7 @@ function updateModal(d){
 	if(cs.hasOwnProperty(city)){
 	    cs[city]['days'] = (milisec2hour(cs[city]['endTime'] - cs[city]['startTime']) / 24.).toFixed(1);
 	}
-	var html = $('<div class="row"><h3>' + city+ '(' + cs[city]['days'] + ' days)</h3><h4>Sites:</h4><div class="sites col-md-12"></div><div class="hotels col-md-12"></div></div>');
+	var html = $('<div class="row"><h3 class="text-danger">' + city+ '(' + cs[city]['days'] + ' days)</h3><div class="sites col-md-6"><h4>Sites:</h4></div><div class="hotels col-md-6"><h4>Hotels:</h4></div></div>');
 	html.find('.sites').append('<ul>');
 	$.each(cs[city]['site'], function(i, s){
 	    html.find('.sites ul').append('<li>' + s['name'] + '</li>');
@@ -324,6 +324,4 @@ function updateModal(d){
 	});
 	m.find('#dText').append(html);
     }
-    
-    console.log(cs);
 }
