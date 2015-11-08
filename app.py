@@ -26,8 +26,8 @@ def search():
     data = request.get_json()
     #print(data)
     response = search_routes(data['homeCity'], data['cities'], data['startTime'], data['endTime'])
-    #print(type(response))
-    #print(response)
+    print(type(response))
+    print(response)
     return response
 
 @app.route('/results')

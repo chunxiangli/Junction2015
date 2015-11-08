@@ -57,7 +57,9 @@ function plot_trips(svg, data){
 	    .attr('class', 'd3-tip')
 	    .offset([-5, 0])
 	    .html(function(d) {
-		return html_map[d['type']](d);
+		if(html_map[d['type']] != undefined){
+		    return html_map[d['type']](d);
+		}
 	    });
     svg.call(tip);
 
@@ -96,6 +98,7 @@ function plot_trips(svg, data){
 	})
 	.on('click', function(d, i){
 	    $('#tripDetails').modal();
+	    updateModal(d);
 	});
     
 
@@ -273,4 +276,36 @@ function test(svg){
 	})
 	.attr('fill', '#666');
 
+}
+
+function updateModal(d){
+    var m = $('#tripDetails');
+    m.find('#mCost').text(parseInt(d['totalPrice']) + '€');
+    var all_start_dts = $.map(d['trips'], function(t){
+	return t['startTime'];
+    });
+    var all_end_dts = $.map(d['trips'], function(t){
+	return t['endTime'];
+    });
+    var min_dt = all_start_dts.reduce(function (a, b) { return a < b ? a : b; });
+    var max_dt = all_end_dts.reduce(function (a, b) { return a > b ? a : b; });
+    m.find('#mDays').text((milisec2hour(max_dt - min_dt) / 24.).toFixed(1) + ' days');
+
+    // city specific information
+    cs = {};
+    $.each(d['trips'], function(i, t){
+	var type = t['type'];	
+	if(type == 'site' || type == 'hotel'){
+	    var city = t['City'];
+	    if(cs[city] == undefined){
+		cs[city] = {'site': [], 'hotel': [],
+			    'startTime': 1000000000000,
+			    'endTime': -1};		
+	    }
+	    cs[city][type].push(t);
+	    cs[city]['startTime'] = Math.min(cs[city]['startTime'], t['startTime']);
+	    cs[city]['endTime'] = Math.max(cs[city]['endTime'], t['endTime']);
+	}
+    });
+    console.log(cs);
 }
