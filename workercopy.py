@@ -4,7 +4,8 @@ from datetime import datetime, timedelta
 from hotels import find_hotels
 from sites import find_sites
 from restaurants import find_restaurants
-import random
+import pprint as pp
+
 from query_to_price import launch_API
 
 def readCityCode():
@@ -28,8 +29,7 @@ def stayTime(city):
     --------
     Int, the number of days to stay
     """
-    return random.randrange(2,4,1)
-
+    return 3
     
 def callSu(startcity, endcity, flydate):
     takeoftime = flydate.strftime("%Y%m%d%H%M%S")
@@ -67,8 +67,6 @@ def eval(citys, cityCode, start, end, extradays):
         trip["type"] = 'flight'
         trip["startCity"] = startAirport
         trip["endCity"] = endAirport
-        trip["startCityName"] = citys[i]
-        trip["endCityName"] = citys[i+1]
         trip["startTime"] = starttime
         trip["endTime"] = endtime
         trip["FLN"] = flightnumber
@@ -92,10 +90,10 @@ def eval(citys, cityCode, start, end, extradays):
     #query hotels and sites
     hotels = find_hotels(trips)
     sites = find_sites(trips)
-    rests = find_restaurants(trips)
+    restaurants = find_restaurants(trips)
     trips.extend(hotels)
     trips.extend(sites)
-    trips.extend(rests)
+    trips.extend(restaurants)
 
     opt = {}
     opt["totalPrice"] = "%.2f" % totalprice
@@ -126,14 +124,14 @@ def findThem(homeCity, citys, startTime, endTime):
 
     # Sort by prices
     inds = sorted(range(len(costs)), key=lambda k: costs[k])    
-    sortedOptions = [allOptions[ind] for ind in inds[0:5]]
+    sortedOptions = [allOptions[ind] for ind in inds]
     result = {}
     result["options"] = sortedOptions
     return json.dumps(result)
 
 if __name__ == "__main__":
-    #a = findThem("Helsinki", ["Paris", "Rome"], "2015-11-01","2015-11-07")
-    #print a
-    #raw_input()
+    a = findThem("Helsinki", ["Paris", "Rome"], "2015-11-01","2015-11-07")
+    pp.pprint(a)
+    raw_input()
     b = findThem("Helsinki", ["Munich", "Milan", "Berlin"], "2015-12-01","2015-12-15")
-    #print b
+    print b
