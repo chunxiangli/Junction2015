@@ -95,7 +95,6 @@ def eval(citys, cityCode, start, end, extradays):
     trips.extend(hotels)
     trips.extend(sites)
     trips.extend(rests)
-    print '>>>>>>'
 
     opt = {}
     opt["totalPrice"] = "%.2f" % totalprice
