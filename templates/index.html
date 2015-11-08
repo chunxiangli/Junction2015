@@ -87,20 +87,28 @@ Plan your trip
   <div class="form-group text-center">
     <button id="moreDest"type="btn" class="btn btn-success">More destinations<image src="/static/images/international.png"/></button>
     <button id="search" type="btn" class="btn btn-primary">Trip search<image src="/static/images/airplane68.png"/></button>
-    <button id="partner" type="btn" class="btn">Tripmate search<image src="/static/images/two209.png" /></button>
+    <button id="findPartner" type="btn" class="btn">Tripmate search<image src="/static/images/two209.png" /></button>
   </div> 
 </form>
 
 <div id="result">
   <div class="starter-template">
-  <h1><center>Everything you need ...</center></h1>
+    <h1><center>Everything you need:</center></h1>
+    <p class="lead"></p>
+  </div>
+</div>
+
+<div id="partnerResult" class="text-center">
+  <div class="starter-template">
+    <h1>Trip mate:</h1>    
+  </div>
   <p class="lead"></p>
+  <ul class="mate_list"></ul>
 </div>
 
 </div>
 <script src="/static/display.js"></script>
 <script src="/static/app.js"></script>
-<script src="/static/partner.js"></script>
 
 {% include 'modal.html' %}
 
