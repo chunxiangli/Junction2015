@@ -1,5 +1,8 @@
 import urllib, json, random
 from getSights import getHotelsByCity
+from datetime import timedelta, datetime, tzinfo, time
+import re
+import random
 
 CURRENCY = 'EUR'
 top_num = 1
@@ -39,9 +42,23 @@ def find_myhotels(trips):
 
 def find_hotels(trips):
   hotels = find_myhotels(trips)
-  print '-------------------------------'
-  return hotels
+  newhotels = []
+  for item in hotels:
+    startTime = item['startTime']
+    endTime = item['endTime']
+    startTime = datetime(int(startTime.split(' ')[0].split('-')[0]),int(startTime.split(' ')[0].split('-')[1]),int(startTime.split(' ')[0].split('-')[2]),int(startTime.split(' ')[1].split(':')[0]),int(startTime.split(' ')[1].split(':')[1]))
+    endTime = datetime(int(endTime.split(' ')[0].split('-')[0]),int(endTime.split(' ')[0].split('-')[1]),int(endTime.split(' ')[0].split('-')[2]),int(endTime.split(' ')[1].split(':')[0]),int(endTime.split(' ')[1].split(':')[1]))
+    while startTime.day<endTime.day:
+      item['startTime'] = re.sub('T',' ',startTime.isoformat())
+      startTime += timedelta(days=1)
+      item['endTime'] = re.sub('T',' ',datetime(startTime.year,startTime.month,startTime.day,random.randrange(6,8,1),0,0).isoformat())
+      newhotels.append(item)
+  return newhotels
   pass
+
+#	{'city': 'Munich', 'name': u'ibis Muenchen City Arnulfpark', 'price': 250, 'popularity': 46, 'startTime': '2015-12-01 23:00:00', 'address': [u'Arnulfstrasse 55', u'80636 M\xfcnchen', u'Deutschland'], 'endTime': '2015-12-07 08:00:00', 'type': 'hotel'}
+
+
 
 def extract_date_and_time(trip, t_type):
         if t_type == "in":
