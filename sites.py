@@ -45,7 +45,7 @@ def find_sites(trips):
     startTime = datetime(int(startTime.split(' ')[0].split('-')[0]),int(startTime.split(' ')[0].split('-')[1]),int(startTime.split(' ')[0].split('-')[2]),int(startTime.split(' ')[1].split(':')[0]),int(startTime.split(' ')[1].split(':')[1]))
     endTime = datetime(int(endTime.split(' ')[0].split('-')[0]),int(endTime.split(' ')[0].split('-')[1]),int(endTime.split(' ')[0].split('-')[2]),int(endTime.split(' ')[1].split(':')[0]),int(endTime.split(' ')[1].split(':')[1]))
     
-    while startTime < endTime and len(siteInfo)>siteIndex:
+    while startTime < endTime:
       if startTime.time() < time(8,0):
         startTime = datetime(startTime.year,startTime.month,startTime.day,8,0,0)
       elif startTime.time() >= time(18,0):
@@ -54,6 +54,7 @@ def find_sites(trips):
         # pick a site
         name,popularity = siteInfo[siteIndex]
         siteIndex += 1
+        if len(siteInfo)<=siteIndex: siteIndex =0
         tmpres = {}
         tmpres["type"] = "site"
         tmpres["popularity"] = popularity
@@ -63,6 +64,7 @@ def find_sites(trips):
         tmpres["startTime"] = re.sub('T',' ',startTime.isoformat())
         tmpres["duration"] = random.randrange(1,3,1) 
         startTime += timedelta(hours=tmpres["duration"])
+        startTime -= timedelta(minutes=10)
         if startTime.time() > time(18,0): startTime = datetime(startTime.year,startTime.month,startTime.day,18,0,0)
         tmpres["endTime"] = re.sub('T',' ',startTime.isoformat())
         res.append(tmpres)
