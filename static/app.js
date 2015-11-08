@@ -3,6 +3,8 @@ $(document).ready(function(){
     $('#result').hide();
     $('#partnerResult').hide();
     
+    var airports = null;
+    
     function addCities(){
 	    
 	var div = $('<div class="form-group dests"><label class="col-sm-2"></label><div class="col-sm-10 text-left"></div></div>').insertAfter('div.dests:last');
@@ -14,6 +16,9 @@ $(document).ready(function(){
 
     $('button#moreDest').on('click', function(e){
 	addCities();
+	$( ".dest" ).autocomplete({
+	    source: airports
+	});
 	e.preventDefault();
     });
     
@@ -22,13 +27,13 @@ $(document).ready(function(){
     });
 
     $.getJSON('/static/airports.json', function(data){
-	var rows = $.map(data, function(row, index){
+	airports = $.map(data, function(row, index){
 	    return {'label': row['city'] + '(' + row['name'] + ')',
 		    'value': row['city']};
 	});
 		    
 	$( ".dest" ).autocomplete({
-	    source: rows
+	    source: airports
 	});
     });
     
@@ -62,6 +67,10 @@ $(document).ready(function(){
 		var w = 2000;
 		var h = 50 * (data['options'].length + 1) + 50; 
 		var svg_padding_left = 500;
+		
+		// clean stuff
+		d3.select('svg').remove();
+		
 		var svg = d3.select('#result')
 			.append('svg')
 			.attr("width", w)
@@ -93,8 +102,8 @@ $(document).ready(function(){
 	    success: function(d){
 		//On ajax success do this
 		if(d['status'] == 0){
-		    $.each(d['items'], function(i){
-			$('ul.mate_list').append('<li>' + i + ' </li>');
+		    $.each(d['items'], function(i, item){
+			$('ul.mate_list').append('<li>' + item + ' </li>');
 		    });		    
 		}
 		else{
