@@ -11,6 +11,8 @@ def findNeighbors(homecity, funcitys, startTime, endTime):
     for line in lines:
         if not line:
             continue
+        print line.split("\t")
+
         uid,uname,hcity,fcitys,stime,etime = line.split("\t")
         fcitys = fcitys.split(" ")
         if hcity == homecity:
@@ -30,3 +32,4 @@ def findNeighbors(homecity, funcitys, startTime, endTime):
 
 if __name__ == "__main__":
     print findNeighbors("Helsinki", ["Munich", "Milan", "Berlin"], "2015-12-01","2015-12-07")
+    print findNeighbors("Helsinki", ["Barcelona", "Berlin", "Paris"], "2015-12-01","2015-12-15")
