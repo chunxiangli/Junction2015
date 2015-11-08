@@ -1,6 +1,7 @@
 $(document).ready(function(){
     //////// init ///////////
     $('#result').hide();
+    $('#partnerResult').hide();
     
     function addCities(){
 	    
@@ -50,8 +51,6 @@ $(document).ready(function(){
     }
     $('button#search').on('click', function(e){
 	var post_data = getFormData();
-	console.log('post data:', post_data);
-	console.log(JSON.stringify(post_data));
 	$.ajax({
 	    url: '/search',
 	    type: 'POST',
@@ -61,13 +60,12 @@ $(document).ready(function(){
 	    success: function(data){
 		//On ajax success do this		
 		var w = 2000;
-		var h = 50 * (data['options'].length + 1); 
+		var h = 50 * (data['options'].length + 1) + 50; 
 		var svg_padding_left = 500;
 		var svg = d3.select('#result')
 			.append('svg')
 			.attr("width", w)
 			.attr("height", h)
-		console.log(data);
 		plot_trips(svg, data['options']);
 		$('#result').show();
 	    },
@@ -84,7 +82,6 @@ $(document).ready(function(){
 	e.preventDefault();
     }).click();
 
-    $('#partnerResult').hide();
     $("button#findPartner").on("click", function(e){
 	var post_data = getFormData();
 	$.ajax({
