@@ -210,11 +210,11 @@ function plot_trips(svg, data){
     var anchor_dts = time_anchors_between_period(min_dt, max_dt);
     var anchor_pts = $.map(anchor_dts, function(dt){
 	return {
-	    'dt': dt.getMonth() + '-' + dt.getDate() + ' ' + dt.getHours() + 'am',
+	    'dt': (dt.getMonth() + 1) + '-' + dt.getDate() + ' ' + dt.getHours() + 'am',
 	    'x': scaled_position_of_time(min_dt, max_dt, dt, W)
 	};
     });
-    
+    console.log(anchor_pts);
     svg.append('g')
 	.selectAll('text')
 	.data(anchor_pts)

@@ -1,4 +1,5 @@
 import os
+import json
 import flask
 from flask import Flask
 from flask import render_template, request
@@ -28,7 +29,8 @@ def search():
     #print(data)
     response = search_routes(data['homeCity'], data['cities'], data['startTime'], data['endTime'])
     # print(type(response))
-    print(response)
+    import pprint
+    pprint.pprint(json.loads(response))
     return response
 
 @app.route('/find', methods=['POST'])
