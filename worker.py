@@ -3,7 +3,7 @@ import json
 from datetime import datetime, timedelta
 from hotels import find_hotels
 from sites import find_sites
-from resturants import find_restaurants
+from restaurants import find_restaurants
 
 from query_to_price import launch_API
 
