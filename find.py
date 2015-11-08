@@ -11,7 +11,6 @@ def findNeighbors(homecity, funcitys, startTime, endTime):
     for line in lines:
         if not line:
             continue
-        print line.split("\t")
 
         uid,uname,hcity,fcitys,stime,etime = line.split("\t")
         fcitys = fcitys.split(" ")
