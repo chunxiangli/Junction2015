@@ -14,7 +14,7 @@ __version__= '0.1'
 
 
 def get_site(city):
-  siteInfo = getSightsByCity('Helsinki')
+  siteInfo = getSightsByCity(city)
   tmpres = {}
   for i in range(len(siteInfo)):
     tmpres[i] = siteInfo[i]['popularity']
@@ -38,7 +38,7 @@ def find_sites(trips):
   siteIndex = 0
   tripsLen = len(trips)
   for i in xrange(tripsLen-1):
-    city      = trips[i]['endCity']
+    city      = trips[i]['endCityName']
     siteInfo  = get_site(city)
     startTime = trips[i]['endTime']
     endTime   = trips[i+1]['startTime']

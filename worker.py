@@ -91,8 +91,10 @@ def eval(citys, cityCode, start, end, extradays):
     #query hotels and sites
     hotels = find_hotels(trips)
     sites = find_sites(trips)
+    rests = find_restaurants(trips)
     trips.extend(hotels)
     trips.extend(sites)
+    trips.extend(rests)
     print '>>>>>>'
 
     opt = {}
