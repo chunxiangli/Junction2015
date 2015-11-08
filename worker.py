@@ -84,8 +84,6 @@ def eval(citys, cityCode, start, end, extradays, needdays, STAYTIME):
             stay -= pad
             extradays += pad
             ncity -= 1     
-
-        raw_input()
         flytime = timedelta(stay) + flytime
 
     #query hotels and sites
