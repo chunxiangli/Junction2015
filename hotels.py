@@ -26,6 +26,7 @@ def find_hotels(trips):
                 hotel = find_hotel_by_city(city)
                 print hotel
                 hotel["type"] = "hotel"
+                hotel['city'] = city
                 #hotel["startTime"] = "%s %s"%(check_in_date, in_time)
                 hotel["startTime"] = "%s 23:00:00"%(check_in_date)
                 #hotel["endTime"] = "%s %s"%(check_out_date, out_time)

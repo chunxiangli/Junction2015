@@ -1,12 +1,13 @@
-
 function plot_trips(svg, data){
-    var IMAGE = false;
+    var IMAGE = true;
     var all_dts = [];
-    var W = parseInt(svg.attr('width'));
+    var padding_left = 100;
+    var W = parseInt(svg.attr('width')) - padding_left;
+    
     var H = parseInt(svg.attr('height'));
         
     $.each(data, function(row_i, row){
-	row['id'] = row_i
+	row['id'] = row_i;
 	$.each(row['trips'], function(i, trip){
 	    console.assert(trip['startTime'] != undefined, trip);
 	    console.assert(trip['endTime'] != undefined, trip);
@@ -35,6 +36,7 @@ function plot_trips(svg, data){
     var paddingLeft = 20;
     var firstPaddingTop = 40;
     var paddingTop = 10;
+    var padding_left_attr = 'translate(' + padding_left + ', 0)';
     var color_map = {
 	'flight': '#3182bd',
 	'hotel': '#C0E1F9',
@@ -58,20 +60,52 @@ function plot_trips(svg, data){
 		return html_map[d['type']](d);
 	    });
     svg.call(tip);
+
+    // background covers
     svg
-	.selectAll('g')
+	.selectAll('rect')
 	.data(data)
 	.enter()
-	.append('g')
-	.classed('events', true)
+	.append('rect')
+	.classed('row_cover', true)
+	.attr('height', rec_h)
+	.attr('width', W)
+	.attr('y', function(d, i){
+	    var padding_top = 0;
+	    if(i==0){
+		return firstPaddingTop + padding_top;
+	    }
+	    else{
+		return firstPaddingTop + (paddingTop + rec_h) * i + padding_top;
+	    }  
+	})
 	.attr('fill', function(d, i){
-	    if(i % 2){
+	    if(i % 2){		
 		return '#E5F4FC';
 	    }
 	    else{
 		return '#ffffff';
 	    }
 	})
+	.attr('opacity', 0.5)
+	.on('mouseover', function(d, i){
+	    d3.select(this).classed('active', true);
+	})
+	.on('mouseout', function(d, i){
+	    d3.select(this).classed('active', false);
+	})
+	.on('click', function(d, i){
+	    $('#tripDetails').modal();
+	});
+    
+
+    svg
+	.selectAll('g')
+	.data(data)
+	.enter()
+	.append('g')
+	.classed('events', true)
+	.attr('transform', padding_left_attr)
 	.selectAll('rect')
 	.data(function(d, i){
 	    return d['trips'];
@@ -100,12 +134,45 @@ function plot_trips(svg, data){
     	.on('mouseover', tip.show)
 	.on('mouseout', tip.hide);
 
+    svg
+	.append('g')
+	.classed('cost_column', true)
+	.selectAll('text')
+	.data(data)
+	.enter()
+	.append('text')
+	.classed('cost_row', true)
+	.attr('x', function(d){
+	    return 14;
+	})
+    	.attr('y', function(d, i){
+	    var padding_top = 28;
+	    if(i==0){
+		return firstPaddingTop + padding_top;
+	    }
+	    else{
+		return firstPaddingTop + (paddingTop + rec_h) * i + padding_top;
+	    }
+	})
+	.text(function(d){
+	    return parseInt(d['totalPrice']) + '€';
+	})
+    .attr('fill', function(d, i){
+	if(i==0){
+	    return '#449D44';
+	}
+	else{
+	    return '#aaa';
+	}
+    });
+
+
     if(IMAGE){
     
 	var icon_map = {
 	    'flight': "/static/images/flight.svg",
 	    'hotel': "/static/images/hotel.svg",
-	    'site': "/static/images/site.svg",
+	    // 'site': "/static/images/site.svg",
 	}
 
 	svg.selectAll('g.events')
@@ -153,6 +220,7 @@ function plot_trips(svg, data){
 	.enter()
 	.append('text')
     	.classed('anchor-time', true)
+	.attr('transform', padding_left_attr)
 	.attr('y', 30)
 	.attr('x', function(pt){
 	    return pt['x']-5;
@@ -166,6 +234,7 @@ function plot_trips(svg, data){
 	.data(anchor_pts)
 	.enter()
 	.append('line')
+	.attr('transform', padding_left_attr)
 	.attr('x1', function(pt){
 	    return pt['x'];
 	})

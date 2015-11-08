@@ -45,12 +45,13 @@ def find_restaurants(trips):
     startTime = datetime(int(startTime.split(' ')[0].split('-')[0]),int(startTime.split(' ')[0].split('-')[1]),int(startTime.split(' ')[0].split('-')[2]),int(startTime.split(' ')[1].split(':')[0]),int(startTime.split(' ')[1].split(':')[1]))
     endTime = datetime(int(endTime.split(' ')[0].split('-')[0]),int(endTime.split(' ')[0].split('-')[1]),int(endTime.split(' ')[0].split('-')[2]),int(endTime.split(' ')[1].split(':')[0]),int(endTime.split(' ')[1].split(':')[1]))
     
-    while startTime < endTime and len(siteInfo)>restIndex:
+    while startTime < endTime:
       st1 = datetime(startTime.year,startTime.month,startTime.day,19,startTime.minute,startTime.second)
       st2 = datetime(startTime.year,startTime.month,startTime.day,21,startTime.minute,startTime.second)
       if st1>=startTime and st2<=endTime:
         name,popularity = siteInfo[restIndex]
         restIndex+=1
+        if len(siteInfo)<=restIndex: restIndex=0
         tmpres = {}
         tmpres["type"] = "restaurant"
         tmpres["popularity"] = popularity
