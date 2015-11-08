@@ -2,6 +2,7 @@ $(document).ready(function(){
     //////// init ///////////
     $('#result').hide();
     $('#partnerResult').hide();
+    $('#loader').show();
     
     var airports = null;
     
@@ -54,6 +55,11 @@ $(document).ready(function(){
 	};
 	return post_data;
     }
+    var loader = $('#loader');
+    $(document).ajaxStart(function(){
+	loader.show();	
+    });
+    
     $('button#search').on('click', function(e){
 	var post_data = getFormData();
 	$.ajax({
@@ -77,6 +83,7 @@ $(document).ready(function(){
 			.attr("height", h)
 		plot_trips(svg, data['options']);
 		$('#result').show();
+		loader.hide();
 	    },
 	    error: function(xhr, ajaxOptions, thrownError) {
 		if (xhr.status == 200) {
@@ -86,6 +93,7 @@ $(document).ready(function(){
 		    console.error(xhr.status);
 		    console.error(thrownError);
 		}
+		loader.hide();
 	    }
 	});
 	e.preventDefault();
@@ -110,6 +118,7 @@ $(document).ready(function(){
 		    $('#partnerResult .lead').text(d['msg']);
 		}
 		$('#partnerResult').show();
+		loader.hide();
 	    },
 	    error: function(xhr, ajaxOptions, thrownError) {
 		if (xhr.status == 200) {
@@ -119,6 +128,7 @@ $(document).ready(function(){
 		    console.error(xhr.status);
 		    console.error(thrownError);
 		}
+		loader.hide();
 	    }
 	});
 	e.preventDefault();
