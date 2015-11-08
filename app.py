@@ -32,7 +32,7 @@ def search():
     return response
 
 @app.route('/find', methods=['POST'])
-def search():
+def find():
     data = request.get_json()
     #print(data)
     response = findNeighbors(data['homeCity'], data['cities'], data['startTime'], data['endTime'])
