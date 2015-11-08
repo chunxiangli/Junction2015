@@ -93,7 +93,11 @@ function plot_trips(svg, data){
 	})
 	.on('mouseout', function(d, i){
 	    d3.select(this).classed('active', false);
+	})
+	.on('click', function(d, i){
+	    $('#tripDetails').modal();
 	});
+    
 
     svg
 	.selectAll('g')
