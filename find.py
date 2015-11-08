@@ -23,8 +23,9 @@ def findNeighbors(homecity, funcitys, startTime, endTime):
                     rstring = "%s %s %s %s %s %s" % (uname, hcity, " ".join(fcitys), stime, etime, "%s@gmail.com" % uname)
                     found.append(rstring)
     if not found:
-        found.append("Sorry, you will be alone :-(")
-    return "\n".join(found)
+        return {'status': -1, 'msg': 'Sorry, you will be alone :-('}
+    else:
+        return {'status': 0, 'items': found}
 
 
 if __name__ == "__main__":

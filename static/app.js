@@ -31,7 +31,7 @@ $(document).ready(function(){
 	});
     });
     
-    $('button#search').on('click', function(e){
+    function getFormData(){
 	var cities= $.map(
 	    $('.dests input')
 		.filter(function(){
@@ -46,6 +46,10 @@ $(document).ready(function(){
 	    'homeCity': 'Helsinki',
 	    'cities': cities
 	};
+	return post_data;
+    }
+    $('button#search').on('click', function(e){
+	var post_data = getFormData();
 	console.log('post data:', post_data);
 	console.log(JSON.stringify(post_data));
 	$.ajax({
@@ -68,8 +72,6 @@ $(document).ready(function(){
 		$('#result').show();
 	    },
 	    error: function(xhr, ajaxOptions, thrownError) {
-		//On error do this
-		// $.mobile.loading('hide')
 		if (xhr.status == 200) {
 		    console.log(ajaxOptions);
 		}
@@ -81,5 +83,39 @@ $(document).ready(function(){
 	});
 	e.preventDefault();
     }).click();
+
+    $('#partnerResult').hide();
+    $("button#findPartner").on("click", function(e){
+	var post_data = getFormData();
+	$.ajax({
+	    url: '/find',
+	    type: 'POST',
+	    contentType:'application/json',
+	    data: JSON.stringify(post_data),
+	    dataType:'json',
+	    success: function(d){
+		//On ajax success do this
+		if(d['status'] == 0){
+		    $.each(d['items'], function(i){
+			$('ul.mate_list').append('<li>' + i + ' </li>');
+		    });		    
+		}
+		else{
+		    $('#partnerResult .lead').text(d['msg']);
+		}
+		$('#partnerResult').show();
+	    },
+	    error: function(xhr, ajaxOptions, thrownError) {
+		if (xhr.status == 200) {
+		    console.log(ajaxOptions);
+		}
+		else {
+		    console.error(xhr.status);
+		    console.error(thrownError);
+		}
+	    }
+	});
+	e.preventDefault();
+    });
 });
 
