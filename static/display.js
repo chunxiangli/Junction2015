@@ -296,16 +296,34 @@ function updateModal(d){
     $.each(d['trips'], function(i, t){
 	var type = t['type'];	
 	if(type == 'site' || type == 'hotel'){
-	    var city = t['City'];
-	    if(cs[city] == undefined){
+	    var city = t['city'];
+	    if(city != undefined && cs[city] == undefined){
 		cs[city] = {'site': [], 'hotel': [],
-			    'startTime': 1000000000000,
+			    'startTime': 4000000000000,
 			    'endTime': -1};		
 	    }
-	    cs[city][type].push(t);
-	    cs[city]['startTime'] = Math.min(cs[city]['startTime'], t['startTime']);
-	    cs[city]['endTime'] = Math.max(cs[city]['endTime'], t['endTime']);
+	    if(city != undefined){
+		cs[city][type].push(t);
+		cs[city]['startTime'] = Math.min(cs[city]['startTime'], t['startTime']);
+		cs[city]['endTime'] = Math.max(cs[city]['endTime'], t['endTime']);
+	    }
 	}
     });
+    for(var city in cs){
+	if(cs.hasOwnProperty(city)){
+	    cs[city]['days'] = (milisec2hour(cs[city]['endTime'] - cs[city]['startTime']) / 24.).toFixed(1);
+	}
+	var html = $('<div class="row"><h3>' + city+ '(' + cs[city]['days'] + ' days)</h3><h4>Sites:</h4><div class="sites col-md-12"></div><div class="hotels col-md-12"></div></div>');
+	html.find('.sites').append('<ul>');
+	$.each(cs[city]['site'], function(i, s){
+	    html.find('.sites ul').append('<li>' + s['name'] + '</li>');
+	});
+	html.find('.hotels').append('<ul>');
+	$.each(cs[city]['hotel'], function(i, s){
+	    html.find('.hotels ul').append('<li>' + s['name'] + '</li>');
+	});
+	m.find('#dText').append(html);
+    }
+    
     console.log(cs);
 }
