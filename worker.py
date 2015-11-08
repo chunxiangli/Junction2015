@@ -132,8 +132,8 @@ def findThem(homeCity, citys, startTime, endTime):
     return json.dumps(result)
 
 if __name__ == "__main__":
-    a = findThem("Helsinki", ["Paris", "Rome"], "2015-11-01","2015-11-07")
+    #a = findThem("Helsinki", ["Paris", "Rome"], "2015-11-01","2015-11-07")
     print a
-    raw_input()
+    #raw_input()
     b = findThem("Helsinki", ["Munich", "Milan", "Berlin"], "2015-12-01","2015-12-15")
     print b
