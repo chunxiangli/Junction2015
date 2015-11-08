@@ -22,12 +22,12 @@ def find_myhotels(trips):
         #check_in_date, in_time = trip["endTime"].split()
         check_in_date, in_time = extract_date_and_time(trip, 'in')
         city = trip["endCityName"]
-        print trip
+        
         for trip in trips[1:]:
                 check_out_date, out_time = extract_date_and_time(trip, 'out')
                 #hotel = find_cheapest_hotel(city, CURRENCY, 'en_GB', '27539733', check_in_date, check_out_date, 1, 1)
                 hotel = find_hotel_by_city(city)
-                print hotel
+
                 hotel["type"] = "hotel"
                 hotel['city'] = city
                 #hotel["startTime"] = "%s %s"%(check_in_date, in_time)
@@ -85,7 +85,7 @@ def correct_out_time(t):
         return t
 
 def split_time(t):
-        print [int(v) for v in t.strip().split(':')[:-1]]
+
         return [int(v) for v in t.strip().split(':')[:-1]]
 
 def find_hotel_by_city(city):
@@ -98,16 +98,16 @@ def find_hotel_by_city(city):
 
 #another option for choose cheapest hotel
 def find_cheapest_hotel(city, currency, local, entityid, check_in_date, check_out_date, guests_num, room_number):
-        print city
+
         city = city_code_dict[city]
         url = ['http://partners.api.skyscanner.net/apiservices/hotels/liveprices/v2']
         #'city UK/EUR/en-GB/27539733/2015-12-04/2015-12-10/2/1?apiKey=prtl6749387986743898559646983194'
         url.extend([city, currency, local, entityid, check_in_date, check_out_date, guests_num, '%d?apiKey=prtl6749387986743898559646983194'%room_number])
-        print '/'.join([str(u) for u in url])
+
         response = urllib.urlopen('/'.join([str(u) for u in url]))
-        print response.read()
+
         res = json.loads(response.read())
-        print res
+
 
         price_list = [] 
         hotel_ids = [] 
@@ -120,7 +120,7 @@ def find_cheapest_hotel(city, currency, local, entityid, check_in_date, check_ou
         top_two_hotel_ids = [hotel_ids[i] for i in top_two_index]
 
         hotels = {}
-        print top_two_hotel_ids
+
         for i in range(top_number):
                 hotels[str(top_two_hotel_ids[i])] = {"type":"hotel", "City": city, "startTime": check_in_date, "endTime": check_out_date, 'price':top_two_prices[i]}
 
