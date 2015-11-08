@@ -48,11 +48,13 @@ def find_hotels(trips):
     endTime = item['endTime']
     startTime = datetime(int(startTime.split(' ')[0].split('-')[0]),int(startTime.split(' ')[0].split('-')[1]),int(startTime.split(' ')[0].split('-')[2]),int(startTime.split(' ')[1].split(':')[0]),int(startTime.split(' ')[1].split(':')[1]))
     endTime = datetime(int(endTime.split(' ')[0].split('-')[0]),int(endTime.split(' ')[0].split('-')[1]),int(endTime.split(' ')[0].split('-')[2]),int(endTime.split(' ')[1].split(':')[0]),int(endTime.split(' ')[1].split(':')[1]))
+    print '>>>>',item
     while startTime.day<endTime.day:
       item['startTime'] = re.sub('T',' ',startTime.isoformat())
       startTime += timedelta(days=1)
       item['endTime'] = re.sub('T',' ',datetime(startTime.year,startTime.month,startTime.day,random.randrange(6,8,1),0,0).isoformat())
       newhotels.append(item)
+      print '----',item
   return newhotels
   pass
 
